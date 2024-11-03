@@ -5,6 +5,7 @@
     --color-c: #fdff7f;
     --color-d: #bfff7f;
     --color-e: #7fff7f;
+    --image-side: 50px;
 }
 
 *,
@@ -139,4 +140,12 @@ footer#selector > #selector-buttons {
     margin-bottom: 100px;
     display: flex;
     flex-wrap: wrap;
+}
+
+#selector-items > .item-image {
+    width: var(--image-side);
+    height: var(--image-side);
+    object-fit: cover;
+    background: #fff;
+    cursor: grab;
 }
