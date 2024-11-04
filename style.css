@@ -62,6 +62,17 @@ p {
 .top-tier-container > .tier-row {
     display: flex;
     flex-direction: row;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    border-bottom-color: #111;
+    transition-duration: 0.3s;
+    transition-timing-function: ease;
+    transition-property: all;
+}
+
+.tier-row.drag-over {
+    background-color: #555; 
+    scale: 1.01;
 }
 
 .tier-row > .label-tier {
@@ -149,4 +160,9 @@ footer#selector > #selector-buttons {
     object-fit: cover;
     background: #fff;
     cursor: grab;
+}
+
+.drag-preview {
+    opacity: 0.5;
+    pointer-events: none;
 }
