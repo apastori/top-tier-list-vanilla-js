@@ -142,7 +142,8 @@ footer#selector > #selector-buttons {
     flex-wrap: wrap;
 }
 
-#selector-items > .item-image {
+#selector-items > .item-image,
+.top-tier-container .item-image {
     width: var(--image-side);
     height: var(--image-side);
     object-fit: cover;
