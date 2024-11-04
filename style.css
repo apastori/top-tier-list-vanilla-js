@@ -153,6 +153,11 @@ footer#selector > #selector-buttons {
     flex-wrap: wrap;
 }
 
+#selector-items.drag-files {
+    background-color: #555;
+    border-style: dash;
+}
+
 #selector-items > .item-image,
 .top-tier-container .item-image {
     width: var(--image-side);

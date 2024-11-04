@@ -20,11 +20,17 @@ const itemsSection = () => {
     return selector("#selector-items");
 };
 
-const rowsTier = () => {
-    return selectorList(".top-tier-container > .tier-row");
+const tier = () => {
+    return selector(".top-tier-container");
 }
 
-console.log(rowsTier());
+const rowsTier = () => {
+    return selectorList(".top-tier-container > .tier-row");
+};
+
+const resetButton = () => {
+    return selector("#reset-tier-button");
+};
 
 // Drop and Move Logic for Tier Board
 (() => {
@@ -53,6 +59,12 @@ console.log(rowsTier());
     itemSectionEle.addEventListener("dragleave", (event) => {
         handleDragLeave(event);
     });
+    itemSectionEle.addEventListener('drop', (event) => {
+        handleDropFromDesktop(event);
+    });
+    itemSectionEle.addEventListener('dragover', (event) => {
+        handleDragOverFromDesktop(event);
+    });
 }
 )();
 
@@ -71,8 +83,7 @@ const handleFileLoad = (filePath) => {
     return imageElement;
 };
 
-const handleImageChange = (event) => {
-    const { files } = event.target;
+const useFilesToCreateItems = (files) => {
     if (files && files.length > 0) {
         Array.from(files).forEach((file) => {
             const reader = new FileReader();
@@ -83,6 +94,11 @@ const handleImageChange = (event) => {
             reader.readAsDataURL(file);
         });
     }
+}
+
+const handleImageChange = (event) => {
+    const { files } = event.target;
+    useFilesToCreateItems(files);
 };
 
 imageInput().addEventListener("change", (event) => {
@@ -118,6 +134,7 @@ function handleDrop(event) {
     }
     currentTarget.classList.remove("drag-over");
     currentTarget.querySelector('.drag-preview')?.remove()
+    itemsSection().classList.remove("drag-files");
 };
 
 function handleDragOver(event) {
@@ -140,3 +157,32 @@ function handleDragLeave(event) {
     currentTarget.querySelector('.drag-preview')?.remove()
 };
 
+resetButton().addEventListener("click", () => {
+    const itemImages = tier().getElementsByClassName("item-image");
+    Array.from(itemImages).forEach((item) => {
+        item.remove();
+        itemsSection().appendChild(item);
+    });
+});
+
+function handleDragOverFromDesktop(event) {
+    event.preventDefault();
+    const { currentTarget, dataTransfer} = event;
+    if (dataTransfer.types.includes('Files')) {
+        currentTarget.classList.add("drag-files");
+        //currentTarget.classList.remove('drag-files')
+        //const { files } = dataTransfer
+        //useFilesToCreateItems(files)
+    }
+}
+
+function handleDropFromDesktop(event) {
+    event.preventDefault();
+    const { currentTarget, dataTransfer} = event;
+    if (dataTransfer.types.includes('Files')) {
+        currentTarget.classList.remove("drag-files");
+        const { files } = dataTransfer
+        useFilesToCreateItems(files)
+    }
+    //itemsSection().classList.remove("drag-files");
+}
