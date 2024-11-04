@@ -166,3 +166,8 @@ footer#selector > #selector-buttons {
     opacity: 0.5;
     pointer-events: none;
 }
+
+#selector-items .drag-over {
+    background-color: #555; 
+    scale: 1.01;
+}

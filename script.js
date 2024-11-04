@@ -43,17 +43,17 @@ console.log(rowsTier());
 
 // Drop and Move Logic for Elements Board
 (() => {
-        const itemSectionEle = itemsSection();
-        itemSectionEle.addEventListener("drop", (event) => {
-            handleDrop(event);
-        });
-        itemSectionEle.addEventListener("dragover", (event) => {
-            handleDragOver(event);
-        });
-        itemSectionEle.addEventListener("dragleave", (event) => {
-            handleDragLeave(event);
-        });
-    }
+    const itemSectionEle = itemsSection();
+    itemSectionEle.addEventListener("drop", (event) => {
+        handleDrop(event);
+    });
+    itemSectionEle.addEventListener("dragover", (event) => {
+        handleDragOver(event);
+    });
+    itemSectionEle.addEventListener("dragleave", (event) => {
+        handleDragLeave(event);
+    });
+}
 )();
 
 const handleFileLoad = (filePath) => {
@@ -72,14 +72,17 @@ const handleFileLoad = (filePath) => {
 };
 
 const handleImageChange = (event) => {
-    const [file] = event.target.files;
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = (eventReader) => {
-        handleFileLoad(eventReader.target.result);
+    const { files } = event.target;
+    if (files && files.length > 0) {
+        Array.from(files).forEach((file) => {
+            const reader = new FileReader();
+            reader.onload = (eventReader) => {
+                handleFileLoad(eventReader.target.result);
+            }
+            // readAsDataURL triggers onload function before this line 
+            reader.readAsDataURL(file);
+        });
     }
-    // readAsDataURL triggers onload function before this line 
-    reader.readAsDataURL(file);
 };
 
 imageInput().addEventListener("change", (event) => {
