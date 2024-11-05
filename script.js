@@ -32,6 +32,10 @@ const resetButton = () => {
     return selector("#reset-tier-button");
 };
 
+const saveButton = () => {
+    return selector("#save-tier-button");
+}
+
 const deleteButton = () => {
     return selector("#delete-items-button");
 }
@@ -162,29 +166,54 @@ function handleDragLeave(event) {
 };
 
 resetButton().addEventListener("click", () => {
+    resetButtonHandler();
+});
+
+saveButton().addEventListener("click", () => {
+    saveButtonHandler();
+});
+
+deleteButton().addEventListener("click", () => {
+    deleteButtonHandler();
+});
+
+function resetButtonHandler() {
     const itemImages = tier().getElementsByClassName("item-image");
     Array.from(itemImages).forEach((item) => {
         item.remove();
         itemsSection().appendChild(item);
     });
-});
+}
 
-deleteButton().addEventListener("click", () => {
+function saveButtonHandler() {
+    const canvas = document.createElement("canvas");
+    const context = canvas.getContext("2d");
+    import('https://cdn.jsdelivr.net/npm/html2canvas-pro@1.5.8/+esm')
+        .then(({ default: html2canvas }) => {
+          html2canvas(tier(), { backgroundColor: null }).then(canvas => {
+            context.drawImage(canvas, 0, 0)
+            const imgURL = canvas.toDataURL('image/png')
+            const downloadLink = document.createElement('a')
+            downloadLink.download = 'tier.png'
+            downloadLink.href = imgURL
+            downloadLink.click()
+        });
+    });
+}
+
+function deleteButtonHandler() {
     const itemSection = itemsSection();
     const images = itemSection.getElementsByTagName('img');
     while (images.length > 0) {
         itemSection.removeChild(images[0]);
     }
-});
+}
 
 function handleDragOverFromDesktop(event) {
     event.preventDefault();
     const { currentTarget, dataTransfer} = event;
     if (dataTransfer.types.includes('Files')) {
         currentTarget.classList.add("drag-files");
-        //currentTarget.classList.remove('drag-files')
-        //const { files } = dataTransfer
-        //useFilesToCreateItems(files)
     }
 }
 
