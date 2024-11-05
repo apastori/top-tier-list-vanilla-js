@@ -32,6 +32,10 @@ const resetButton = () => {
     return selector("#reset-tier-button");
 };
 
+const deleteButton = () => {
+    return selector("#delete-items-button");
+}
+
 // Drop and Move Logic for Tier Board
 (() => {
     Array.from(rowsTier()).forEach((row) => {
@@ -163,6 +167,14 @@ resetButton().addEventListener("click", () => {
         item.remove();
         itemsSection().appendChild(item);
     });
+});
+
+deleteButton().addEventListener("click", () => {
+    const itemSection = itemsSection();
+    const images = itemSection.getElementsByTagName('img');
+    while (images.length > 0) {
+        itemSection.removeChild(images[0]);
+    }
 });
 
 function handleDragOverFromDesktop(event) {
