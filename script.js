@@ -40,6 +40,10 @@ const deleteButton = () => {
     return selector("#delete-items-button");
 }
 
+const defaultButton = () => {
+    return selector("#default-tier-button");
+}
+
 // Drop and Move Logic for Tier Board
 (() => {
     Array.from(rowsTier()).forEach((row) => {
@@ -177,6 +181,10 @@ deleteButton().addEventListener("click", () => {
     deleteButtonHandler();
 });
 
+defaultButton().addEventListener("click", () => {
+    defaultImages();
+})
+
 function resetButtonHandler() {
     const itemImages = tier().getElementsByClassName("item-image");
     Array.from(itemImages).forEach((item) => {
@@ -226,4 +234,15 @@ function handleDropFromDesktop(event) {
         useFilesToCreateItems(files)
     }
     //itemsSection().classList.remove("drag-files");
+}
+
+function defaultImages() {
+    deleteButtonHandler();
+    languages.forEach((language) => {
+        let languagePath;
+        language !== "Python" && language !== "Go" ? 
+            languagePath = `./images/${language}.png`
+            : languagePath = `./images/${language}.jpg`
+        handleFileLoad(languagePath);
+    }); 
 }

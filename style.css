@@ -6,6 +6,7 @@
     --color-d: #bfff7f;
     --color-e: #7fff7f;
     --image-side: 50px;
+    --dark-color: #111;
 }
 
 *,
@@ -49,6 +50,80 @@ p {
 #tier-header > img {
     max-width: 150px;
     height: auto;
+}
+
+#default-button-container {
+    display: flex;
+    align-items: center;
+    justify-content: center; 
+}
+
+#default-tier-button {
+    display: flex;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    align-items: center;
+    justify-content: center;
+    padding: 12px;
+    max-width: 300px;
+    font-size: 14px;
+    font-weight: 500;
+    text-align: center;
+    text-decoration: none;
+    color: #fff;
+    border: none;
+    border-radius: 25px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    background-color: #111;
+}
+
+#default-tier-button:hover {
+    transform: translateY(-2px) scale(1.03);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.25);
+    background-image: linear-gradient(45deg, #34495e, #2c3e50);
+}
+
+#default-tier-button:active {
+    transform: translateY(1px);
+}
+
+#default-tier-button::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: rotate(45deg);
+    transition: all 0.3s ease;
+}
+
+#default-tier-button:hover::before {
+    animation: shine 1.5s infinite;
+}
+
+@keyframes shine {
+    0% {
+        transform: rotate(45deg) translateY(-120%);
+    }
+    100% {
+        transform: rotate(45deg) translateY(120%);
+    }
+}
+
+.cool-button-icon {
+    margin-right: 10px;
+    font-size: 20px;
+}
+
+.cool-button-text {
+    flex: 1;
+    white-space: normal;
 }
 
 .top-tier-container {
